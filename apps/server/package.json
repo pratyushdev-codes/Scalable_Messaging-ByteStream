@@ -12,6 +12,7 @@
         "dev": "tsc-watch --onSuccess \"node dist/index.js\""
     },
     "dependencies": {
+        "ioredis": "^5.4.1",
         "socket.io": "^4.8.1"
     }
 }
