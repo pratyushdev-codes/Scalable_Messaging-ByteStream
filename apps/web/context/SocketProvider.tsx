@@ -18,6 +18,12 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [messages, setMessages] = useState<string[]>([]);
 
+    const onMessageRec = useCallback((msg: string) => {
+        console.log("From server message received:", msg);
+        const     {message} = JSON.parse(msg) as  {message: string}
+        setMessages(prev=>[...prev , message]);
+    }, []);
+
     useEffect(() => {
         const _socket = io('http://localhost:8000');
 
@@ -31,15 +37,14 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
         });
 
         // Listen for messages from the server
-        _socket.on('message', (msg: string) => {
-            setMessages((prevMessages) => [...prevMessages, msg]);
-        });
+        _socket.on('message', onMessageRec);
 
         return () => {
             _socket.disconnect();
+            _socket.off('message', onMessageRec);
             setSocket(null);
         };
-    }, []);
+    }, [onMessageRec]);
 
     const sendMessage = useCallback((msg: string) => {
         if (socket) {
@@ -59,9 +64,9 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 };
 
 export const useSocket = () => {
-    const state = useContext(SocketContext);
-    if (!state) {
+    const context = useContext(SocketContext);
+    if (!context) {
         throw new Error("Socket context is not available. Ensure that SocketProvider is wrapped around the component using useSocket.");
     }
-    return state;
+    return context;
 };
