@@ -3,7 +3,12 @@ import Redis from "ioredis";
 
 
 
-const pub = new Redis();
+const pub = new Redis({
+    'host':'',
+    'port':6379,
+    'username':'',
+    'password':'',
+});
 const sub = new Redis();
 
 
