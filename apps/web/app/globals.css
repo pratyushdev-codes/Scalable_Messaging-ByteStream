@@ -12,7 +12,7 @@
   --secondary-color: #383838;
   --secondary-hover-color: #444;
 }
-
+¯¸
 /* Global variables for light mode */
 .light_mode {
   --text-color: #222;
@@ -40,11 +40,12 @@ body {
   overflow-x: hidden;
 }
 
-body {
+:global(body) {
   font-family: "Poppins", sans-serif;
   color: var(--foreground);
   background: var(--background);
 }
+
 
 * {
   box-sizing: border-box;
