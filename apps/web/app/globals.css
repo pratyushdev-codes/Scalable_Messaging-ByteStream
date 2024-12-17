@@ -40,7 +40,7 @@ body {
   overflow-x: hidden;
 }
 
-:global(body) {
+body {
   font-family: "Poppins", sans-serif;
   color: var(--foreground);
   background: var(--background);
